@@ -4,9 +4,9 @@ import time
 import pymsteams
 from datetime import datetime
  
-ID = "넥슨 계정 아이디"
-PW = "넥슨 계정 비밀번호"
-myTeamsMessage = pymsteams.connectorcard("팀즈 커넥터 url")
+ID = "Nexon ID"
+PW = "Nexon PW"
+myTeamsMessage = pymsteams.connectorcard("teams connector url")
  
 option = webdriver.ChromeOptions()
 option.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -18,14 +18,14 @@ browser.maximize_window()
 browser.get("https://test-creators.nexon.com/kr/campaign")
  
  
-#로그인
+# login
 browser.find_element(By.XPATH, '//*[@id="root"]/header/div/div/button').click()
 browser.find_element(By.ID, 'txtNexonID').send_keys(ID)
 browser.find_element(By.ID, 'txtPWD').send_keys(PW)
 browser.find_element(By.XPATH, '//*[@id="nexonLogin"]/fieldset/div[4]/button').click()
 time.sleep(2)
  
-# 보너스 카드 찾기
+# find bonus cards
 def find():
     try:
         browser.find_element(By.XPATH, value="//div[@role='button']")
@@ -33,7 +33,7 @@ def find():
     except:
         pass
  
-print("시작합니다.")
+print("Let's start.")
      
 def main():
     try:
@@ -44,20 +44,20 @@ def main():
                 x += 1
                 time.sleep(2)
                 browser.find_element(By.XPATH, "/html/body/div[4]/div/div/div/div/div[6]/button").click()
-                print("카드 보상 + %s개 수령" % (x))
+                print("I find + %s cards" % (x))
                 browser.refresh()
             else:
-                print("보너스 카드가 없습니다.")
+                print("There are no cards.")
                 browser.refresh()
                 time.sleep(0.5)
                  
         today = datetime.now().strftime("%Y-%m-%d")     
-        myTeamsMessage.text(today+ "\n" + ID + " 계정 보너스 카드 보상 완료를 확인하세요.")
+        myTeamsMessage.text(today+ "\n" + ID + " has recieved all bonus reward from cards. Check it please.")
         myTeamsMessage.send()
  
  
     except:
-        myTeamsMessage.text("프로그램이 멈췄습니다.")
+        myTeamsMessage.text("The program has stopped.")
         myTeamsMessage.send()
          
  
