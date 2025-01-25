@@ -13,7 +13,7 @@ import pyautogui
 import configparser
  
  
-# 세팅 설정
+# setting before testing
 config = configparser.ConfigParser()
 config.read('ngm 인증서 갱신.ini', encoding='utf-8-sig')
 Type = config['SETTING']['type']
@@ -23,13 +23,13 @@ bot_url = config['SETTING']['bot_url']
 myTeamsMessage = pymsteams.connectorcard(bot_url, verify=False)
 driver_path = Type + '.exe'
  
-# nmg 변수 모음
+# collection of variables
 ngm_install = "C:/Users/" + Download + "/Downloads/Install_NGM.exe"
 ngm_folder = "C:/ProgramData/Nexon/NGM"
 ngm_path = "C:/ProgramData/Nexon/NGM/NGM.exe"
 repair_path = "C:/Users/" + Download + "/Downloads/NexonRepair.exe"
  
-# nmg 및 설치 파일 확인 및 삭제
+# check and delete NGM and program files
 def deleteInstallFiles():
     if os.path.exists(ngm_install):
         os.remove(ngm_install)
@@ -44,7 +44,7 @@ def deleteInstallFiles():
     else:
         pass
  
-# 웹 세팅
+# web setting
 def setting_web(weburl):
     driver_path = Type + '.exe'
     if driver_path == 'chromedriver.exe':
@@ -73,7 +73,7 @@ def setting_web(weburl):
         time.sleep(3)
         driver.quit()
  
-# 윈도우 타이틀로 프로그램 찾는 함수
+# find the program using window titles
 def checkWinTitle(programName):
     for w in pygetwindow.getAllTitles():
         try:
@@ -83,7 +83,7 @@ def checkWinTitle(programName):
             pass
     return True
  
-# 프로그램 실행
+# run NGM
 def runInstallFiles(file_path, wintTitle):
     os.startfile(file_path)
     time.sleep(2)
@@ -92,7 +92,7 @@ def runInstallFiles(file_path, wintTitle):
     pyautogui.press('enter')
     time.sleep(0.5)
  
-# 프로그램 종료 확인
+# check dead or live
 def checkWinAlive(programName):
     while(True):
         time.sleep(0.5)
@@ -103,7 +103,7 @@ def checkWinAlive(programName):
             pyautogui.press('enter')
             break
  
-# 버전 확인 함수
+# check ver of NGM
 def get_version_number(ngm_path):
     file_info = GetFileVersionInfo(ngm_path, '\\')
     ms = file_info['FileVersionMS']
@@ -111,7 +111,7 @@ def get_version_number(ngm_path):
     return [str(HIWORD(ms)), str(LOWORD(ms)),
             str(HIWORD(ls)), str(LOWORD(ls))]
  
-# 버전 비교 함수
+# compare ver of NGM
 def check_version(ngm_path, repair = ""):
     version = '.'.join(get_version_number(ngm_path))
     if(version != Build):
