@@ -52,7 +52,7 @@ def main():
                 time.sleep(0.5)
                  
         today = datetime.now().strftime("%Y-%m-%d")     
-        myTeamsMessage.text(today+ "\n" + ID + " has recieved all bonus reward from cards. Check it please.")
+        myTeamsMessage.text(today+ "\n" + ID + " has recieved all bonus rewards. Check it please.")
         myTeamsMessage.send()
  
  
